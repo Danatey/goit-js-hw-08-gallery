@@ -25,9 +25,9 @@ const addGalleryElement = galleryItems
 })
 .join(' ');
    
-let imgActiveIndx;
+let imgActiveIndex;
 
-function onImagesConteinerClick(event) {
+function onImagesClick(event) {
         event.preventDefault()
         if (event.target === event.currentTarget) {
             return
@@ -40,7 +40,7 @@ function onImagesConteinerClick(event) {
 function onOpenImage(event) {
     lightboxImageEl.src = event.target.dataset.source;
     lightboxImageEl.alt = event.target.alt;
-    imgActiveIndx = +event.target.dataset.index;
+    imgActiveIndex = event.target.dataset.index;
     window.addEventListener("keydown", onRightPress);
     window.addEventListener("keydown", onLeftPress);
 }
@@ -61,41 +61,38 @@ function onCloseModalKeyboard(event) {
         onCloseModal()
     };
 }
-document.body.addEventListener('keyup', onCloseModalKeyboard, false);
 
 const onRightPress = (event) => {
     if (event.code === "ArrowRight") {
         window.addEventListener("keydown", onLeftPress);
-        imgActiveIndx++;
-        lightboxImageEl.setAttribute("src", `${galleryItems[imgActiveIndx].original}`);
-        // console.log(galleryItems[event.target.dataset.index])
+        imgActiveIndex++;
+        lightboxImageEl.setAttribute("src", `${galleryItems[imgActiveIndex].original}`);
     }
-    if (imgActiveIndx === galleryItems.length - 1) {
+    if (imgActiveIndex === galleryItems.length - 1) {
         window.removeEventListener("keydown", onRightPress);
         window.addEventListener("keydown", onLeftPress);
     }
-    if (imgActiveIndx < galleryItems.length - 1) {
+    if (imgActiveIndex < galleryItems.length - 1) {
         window.addEventListener("keydown", onRightPress);
     }
-    //   console.log(imgActiveIndx);
 };
 
 const onLeftPress = (event) => {
     if (event.code === "ArrowLeft") {
         window.addEventListener("keydown", onRightPress);
-        imgActiveIndx--;
-        lightboxImageEl.setAttribute("src", `${galleryItems[imgActiveIndx].original}`);
+        imgActiveIndex--;
+        lightboxImageEl.setAttribute("src", `${galleryItems[imgActiveIndex].original}`);
     }
-    if (imgActiveIndx === 0) {
+    if (imgActiveIndex === 0) {
         window.removeEventListener("keydown", onLeftPress);
         window.addEventListener("keydown", onRightPress);
     }
-    if (imgActiveIndx > 0) {
+    if (imgActiveIndex > 0) {
         window.addEventListener("keydown", onLeftPress);
     }
-    //   console.log(imgActiveIndx);
 };
 
 listEl.insertAdjacentHTML('beforeend', addGalleryElement);
-listEl.addEventListener('click', onImagesConteinerClick);
+listEl.addEventListener('click', onImagesClick);
 lightboxOverlayEl.addEventListener('click', onCloseModalOverlay);
+document.body.addEventListener('keyup', onCloseModalKeyboard, false);
