@@ -25,24 +25,24 @@ const addGalleryElement = galleryItems
 })
 .join(' ');
    
-let imgActiveIndex;
-
 function onImagesClick(event) {
-        event.preventDefault()
-        if (event.target === event.currentTarget) {
-            return
-        }
-        lightboxConteinerEl.classList.add('is-open')
-  onOpenImage(event)
-  btnCloseModalEl.addEventListener('click', onCloseModal)
+    event.preventDefault()
+    if (event.target === event.currentTarget) {
+        return
+    }
+    lightboxConteinerEl.classList.add('is-open')
+    onOpenImage(event)
+    btnCloseModalEl.addEventListener('click', onCloseModal)
+    window.addEventListener("keydown", onRightPress);
+    window.addEventListener("keydown", onLeftPress);
 }
+
+let imgActiveIndex;
 
 function onOpenImage(event) {
     lightboxImageEl.src = event.target.dataset.source;
     lightboxImageEl.alt = event.target.alt;
     imgActiveIndex = event.target.dataset.index;
-    window.addEventListener("keydown", onRightPress);
-    window.addEventListener("keydown", onLeftPress);
 }
 
 function onCloseModal() {
